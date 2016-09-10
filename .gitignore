@@ -1,0 +1,16 @@
+*.pbi
+*.cout
+*.bat
+*.xcl
+*.dbgdt
+*.dni
+*.wsdt
+*.wspos
+*.d51
+*.lst
+*.s51
+*.map
+*.r51
+*.pbd
+*.browse
+*.dep
