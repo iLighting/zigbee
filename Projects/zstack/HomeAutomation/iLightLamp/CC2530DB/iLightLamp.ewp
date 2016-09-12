@@ -1548,7 +1548,7 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCMultibyteSupport</name>
@@ -1941,7 +1941,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>SampleLight.d51</state>
+          <state>iLightLamp.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -2139,7 +2139,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>SampleLight.sim</state>
+          <state>iLightLamp.sim</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
@@ -4627,17 +4627,17 @@
   </configuration>
   <group>
     <name>App</name>
+    <group>
+      <name>Common</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Source\iLight_appMsg.c</name>
+      </file>
+    </group>
     <file>
-      <name>$PROJ_DIR$\..\Source\OSAL_SampleLight.c</name>
+      <name>$PROJ_DIR$\..\Source\iLightLamp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\zcl_samplelight.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\zcl_samplelight.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\zcl_samplelight_data.c</name>
+      <name>$PROJ_DIR$\..\Source\OSAL_iLightLamp.c</name>
     </file>
   </group>
   <group>

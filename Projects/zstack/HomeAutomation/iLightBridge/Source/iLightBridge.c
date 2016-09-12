@@ -11,6 +11,7 @@
 
 static byte iLightBridge_taskId = 0;
 static byte iLightBridge_nwkState = 0;
+static byte iLightBridge_transId = 0;
 
 const cId_t iLightBridge_InClusterList[] = {
   0
@@ -45,6 +46,11 @@ void iLightBridge_init(byte taskId) {
 }
 
 
+static void iLightBridge_ProcessAirMsg(afIncomingMSGPacket_t * pMsg) {
+  
+}
+
+
 static void iLightBridge_ProcessAppMsg(mtSysAppMsg_t *pMsg) {
   uint8 appDataLen = pMsg->appDataLen;
   uint8 * pData = pMsg->appData;
@@ -53,6 +59,8 @@ static void iLightBridge_ProcessAppMsg(mtSysAppMsg_t *pMsg) {
   uint8 destEp;
   uint16 clusterId;
   uint8 * pAppPayload = NULL;
+  afAddrType_t destAddr;
+  afStatus_t sendResult;
   
   // parse
   // ---------------------
@@ -66,7 +74,25 @@ static void iLightBridge_ProcessAppMsg(mtSysAppMsg_t *pMsg) {
 
   // send
   // ---------------------
-  
+  destAddr.addr.shortAddr = destNwk;
+  destAddr.addrMode = afAddr16Bit;
+  destAddr.endPoint = destEp;
+  // destAddr.panId = 0;
+  sendResult = AF_DataRequest(
+    (afAddrType_t * )&destAddr,
+    (endPointDesc_t *)&iLightBridge_EpDesc,
+    clusterId,
+    appDataLen - 6,
+    (uint8 *)pAppPayload,
+    (uint8 *)&iLightBridge_transId,
+    AF_ACK_REQUEST | AF_SUPRESS_ROUTE_DISC_NETWORK,
+    AF_DEFAULT_RADIUS);
+  switch (sendResult) {
+  	case afStatus_SUCCESS:
+	  break;
+	default:
+	  break;
+  }
 }
 
 
@@ -82,6 +108,10 @@ uint16 iLightBridge_event_loop( uint8 task_id, uint16 events )
     {
       switch ( MSGpkt->hdr.event )
       {
+        case AF_INCOMING_MSG_CMD:
+		  iLightBridge_ProcessAirMsg((afIncomingMSGPacket_t *)MSGpkt);
+		  break;
+		
         case ZDO_STATE_CHANGE:
           iLightBridge_nwkState = (devStates_t)(MSGpkt->hdr.status);
           break;

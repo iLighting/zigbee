@@ -3887,13 +3887,10 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\Source\iLightBridge.c</name>
+      <name>$PROJ_DIR$\..\Source\iLightLamp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\iLightBridge.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\OSAL_iLightBridge.c</name>
+      <name>$PROJ_DIR$\..\Source\OSAL_iLightLamp.c</name>
     </file>
   </group>
   <group>
