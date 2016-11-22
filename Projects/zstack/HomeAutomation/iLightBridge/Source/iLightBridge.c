@@ -4,8 +4,10 @@
 #include "ZDApp.h"
 #include "ZDObject.h"
 #include "ZDConfig.h"
+#include "MT.h"
 #include "MT_SYS.h"
 #include "MT_APP.h"
+#include "hal_led.h"
 
 #include "iLightBridge.h"
 
@@ -40,14 +42,49 @@ static endPointDesc_t iLightBridge_EpDesc = {
   (afNetworkLatencyReq_t)0
 };
 
+// 0: power up
+// 1: external
+// 2: watch dog
+// 3: running
+void iLightBridge_SysResetInd(uint8 reason) {
+	struct {
+		uint8 reason;
+		uint8 transportRev;
+		uint8 productId;
+		uint8 majorRel;
+		uint8 minorRel;
+		uint8 hwRev;
+	} sys_reset_ind;
+	sys_reset_ind.reason = reason;
+	sys_reset_ind.transportRev = 0;
+	sys_reset_ind.productId = 0;
+	sys_reset_ind.majorRel = 0;
+	sys_reset_ind.minorRel = 0;
+	sys_reset_ind.hwRev = 0;
+	MT_BuildAndSendZToolResponse(0x41,0x80,sizeof(sys_reset_ind), (uint8 *)&sys_reset_ind);
+}
+
 void iLightBridge_init(byte taskId) {
   iLightBridge_taskId = taskId;
   afRegister(&iLightBridge_EpDesc);
+  iLightBridge_SysResetInd(3);
 }
 
 
+// inject参数，上传至local server(AppMsgFeedback)
 static void iLightBridge_ProcessAirMsg(afIncomingMSGPacket_t * pMsg) {
-  
+  iLightBridge_feedback_t feedback;
+	
+	feedback.remoteNwk = pMsg->srcAddr.addr.shortAddr;
+	feedback.remoteEp = pMsg->endPoint;
+	feedback.clusterId = pMsg->clusterId;
+	feedback.msgLen = pMsg->cmd.DataLength;
+	feedback.pData = pMsg->cmd.Data;
+	
+  MT_BuildAndSendZToolResponse(
+		0x49, 0,
+		feedback.msgLen,
+		feedback.pData);
 }
 
 
@@ -89,10 +126,25 @@ static void iLightBridge_ProcessAppMsg(mtSysAppMsg_t *pMsg) {
     AF_DEFAULT_RADIUS);
   switch (sendResult) {
   	case afStatus_SUCCESS:
-	  break;
-	default:
-	  break;
+      break;
+    default:
+      break;
   }
+}
+
+void iLightBridge_ProcessStateChange(devStates_t state) {
+	iLightBridge_nwkState = state;
+	switch (state) {
+		case DEV_INIT:
+			// flash slowly
+			HalLedBlink(HAL_LED_1, 0, 30, 1000);
+			break;
+		case DEV_COORD_STARTING:
+		case DEV_ZB_COORD:
+			// turn on
+			HalLedSet(HAL_LED_1, HAL_LED_MODE_ON);
+			break;
+	}
 }
 
 
@@ -109,11 +161,11 @@ uint16 iLightBridge_event_loop( uint8 task_id, uint16 events )
       switch ( MSGpkt->hdr.event )
       {
         case AF_INCOMING_MSG_CMD:
-		  iLightBridge_ProcessAirMsg((afIncomingMSGPacket_t *)MSGpkt);
-		  break;
+          iLightBridge_ProcessAirMsg((afIncomingMSGPacket_t *)MSGpkt);
+          break;
 		
         case ZDO_STATE_CHANGE:
-          iLightBridge_nwkState = (devStates_t)(MSGpkt->hdr.status);
+          iLightBridge_ProcessStateChange((devStates_t)(MSGpkt->hdr.status));
           break;
         
         case MT_SYS_APP_MSG:

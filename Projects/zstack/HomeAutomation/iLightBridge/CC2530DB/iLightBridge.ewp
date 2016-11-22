@@ -312,6 +312,7 @@
           <state>MT_APP_FUNC</state>
           <state>MT_SYS_FUNC</state>
           <state>MT_ZDO_FUNC</state>
+          <state>MT_ZDO_CB_FUNC</state>
           <state>LCD_SUPPORTED=DEBUG</state>
           <state>MULTICAST_ENABLED=FALSE</state>
           <state>ZCL_READ</state>
@@ -326,6 +327,7 @@
           <state>xZCL_LEVEL_CTRL</state>
           <state>ZCL_DIAGNOSTIC</state>
           <state>FEATURE_SYSTEM_STATS</state>
+          <state>MT_UART_DEFAULT_OVERFLOW=FALSE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -984,7 +986,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>SampleLight.sim</state>
+          <state>iLightBridge.sim</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>

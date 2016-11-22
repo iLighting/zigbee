@@ -48,7 +48,7 @@ void iLightLamp_feedbackOnOff() {
   iLight_appMsg_lamp_onOff_feedback_t * pFeedback = NULL;
   afStatus_t sendResult;
 
-  pFeedback = (iLight_appMsg_lamp_onOff_feedback_t *)osal_msg_allocate(sizeof(iLight_appMsg_lamp_onOff_feedback_t));
+  pFeedback = (iLight_appMsg_lamp_onOff_feedback_t *)osal_mem_alloc(sizeof(iLight_appMsg_lamp_onOff_feedback_t));
   if (!pFeedback) return;
 
   destAddr.addr.shortAddr = 0;
@@ -69,6 +69,7 @@ void iLightLamp_feedbackOnOff() {
   	AF_DEFAULT_RADIUS);
   
   (void)sendResult;
+  osal_mem_free(pFeedback);
 }
 
 
@@ -105,6 +106,36 @@ void iLightLamp_ProcessKeys(uint8 shift, uint8 keys) {
   }
 }
 
+void iLightLamp_annce(void) {
+	uint16 nwk = NLME_GetShortAddr();
+	byte *ieeep = NLME_GetExtAddr();
+	// router
+	uint8 ca = (0x01<<1);
+	ZDP_DeviceAnnce(nwk, ieeep, ca, 0);
+}
+
+void iLightLamp_ProcessStateChange(devStates_t state) {
+	iLightLamp_nwkState = state;
+	switch (state) {
+		case DEV_INIT:
+			// flash slowly
+			HalLedBlink(HAL_LED_1, 0, 30, 1000);
+			break;
+		case DEV_NWK_DISC:
+		case DEV_NWK_JOINING:
+		case DEV_END_DEVICE_UNAUTH:
+			// flash quickly
+			HalLedBlink(HAL_LED_1, 0, 30, 500);
+			break;
+		case DEV_END_DEVICE:
+		case DEV_ROUTER:
+			// turn on
+			HalLedSet(HAL_LED_1, HAL_LED_MODE_ON);
+			// annce
+			iLightLamp_annce();
+			break;
+	}
+}
 
 uint16 iLightLamp_event_loop(uint8 taskId, uint16 events) {
   afIncomingMSGPacket_t * MSGpkt = NULL;
@@ -115,15 +146,15 @@ uint16 iLightLamp_event_loop(uint8 taskId, uint16 events) {
       switch ( MSGpkt->hdr.event )
       {
         case AF_INCOMING_MSG_CMD:
-		  iLightLamp_ProcessAirMsg((afIncomingMSGPacket_t * )MSGpkt);
-		  break;
+				  iLightLamp_ProcessAirMsg((afIncomingMSGPacket_t * )MSGpkt);
+				  break;
 
-		case KEY_CHANGE:
-		  iLightLamp_ProcessKeys( ((keyChange_t *)MSGpkt)->state, ((keyChange_t *)MSGpkt)->keys );
-		  break;
+				case KEY_CHANGE:
+				  iLightLamp_ProcessKeys( ((keyChange_t *)MSGpkt)->state, ((keyChange_t *)MSGpkt)->keys );
+				  break;
 		
         case ZDO_STATE_CHANGE:
-          iLightLamp_nwkState = (devStates_t)(MSGpkt->hdr.status);
+          iLightLamp_ProcessStateChange(MSGpkt->hdr.status);
           break;
 
         default:
