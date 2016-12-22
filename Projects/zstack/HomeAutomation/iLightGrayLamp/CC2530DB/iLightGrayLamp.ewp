@@ -786,7 +786,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>SampleLight.d51</state>
+          <state>iLightGrayLamp.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -1461,7 +1461,7 @@
           <state>TC_LINKKEY_JOIN</state>
           <state>NV_INIT</state>
           <state>xNV_RESTORE</state>
-          <state>HOLD_AUTO_START</state>
+          <state>xHOLD_AUTO_START</state>
           <state>ZTOOL_P1</state>
           <state>MT_TASK</state>
           <state>MT_APP_FUNC</state>
@@ -1548,7 +1548,7 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCMultibyteSupport</name>
@@ -1941,7 +1941,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>SampleLight.d51</state>
+          <state>iLightGrayLamp.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -2139,7 +2139,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>SampleLight.sim</state>
+          <state>iLightGrayLamp.sim</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
@@ -3098,7 +3098,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>SampleLight.d51</state>
+          <state>iLightGrayLamp.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -3773,7 +3773,7 @@
           <state>TC_LINKKEY_JOIN</state>
           <state>NV_INIT</state>
           <state>xNV_RESTORE</state>
-          <state>HOLD_AUTO_START</state>
+          <state>xHOLD_AUTO_START</state>
           <state>xZTOOL_P1</state>
           <state>xMT_TASK</state>
           <state>xMT_APP_FUNC</state>
@@ -3861,7 +3861,7 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCMultibyteSupport</name>
@@ -4254,7 +4254,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>SampleLight.d51</state>
+          <state>iLightGrayLamp.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -4627,17 +4627,17 @@
   </configuration>
   <group>
     <name>App</name>
+    <group>
+      <name>Common</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\Source\iLight_appMsg.c</name>
+      </file>
+    </group>
     <file>
-      <name>$PROJ_DIR$\..\Source\OSAL_SampleLight.c</name>
+      <name>$PROJ_DIR$\..\Source\iLightGrayLamp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\zcl_samplelight.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\zcl_samplelight.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\zcl_samplelight_data.c</name>
+      <name>$PROJ_DIR$\..\Source\OSAL_iLightGrayLamp.c</name>
     </file>
   </group>
   <group>
@@ -4695,6 +4695,7 @@
       <group>
         <name>CC2530EB</name>
         <excluded>
+          <configuration>RouterEB</configuration>
           <configuration>RouterZLight</configuration>
         </excluded>
         <group>
@@ -4759,7 +4760,6 @@
         <name>ZLIGHT</name>
         <excluded>
           <configuration>CoordinatorEB</configuration>
-          <configuration>RouterEB</configuration>
           <configuration>EndDeviceEB</configuration>
         </excluded>
         <group>

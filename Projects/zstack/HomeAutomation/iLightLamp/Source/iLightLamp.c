@@ -61,7 +61,7 @@ void iLightLamp_feedbackOnOff() {
   sendResult = AF_DataRequest(
   	&destAddr,
   	&iLightLamp_epDesc,
-  	ILIGHT_APPMSG_LAMP_CLUSTER,
+  	ILIGHT_APPMSG_CLUSTER,
   	sizeof(iLight_appMsg_lamp_onOff_feedback_t),
   	(uint8 *)pFeedback,
   	&iLightLamp_transId,
@@ -87,11 +87,11 @@ void iLightLamp_init(uint8 taskId) {
 void iLightLamp_ProcessAirMsg(afIncomingMSGPacket_t * MSGpkt) {
   uint16 cluster = MSGpkt->clusterId;
   uint8 cmdId = 0;
-  if (cluster != ILIGHT_APPMSG_LAMP_CLUSTER) return;
+  if (cluster != ILIGHT_APPMSG_CLUSTER) return;
   cmdId = appMsg_getCmdId(MSGpkt->cmd.Data);
   switch(cmdId) {
   	case ILIGHT_APPMSG_LAMP_ONOFF:
-	  iLightLamp_currentOnOff = ((iLight_appMsg_lamp_onOff_t *) MSGpkt)->onOff;
+		iLightLamp_currentOnOff = ((iLight_appMsg_lamp_onOff_t *) MSGpkt)->onOff;
 	  iLightLamp_updateOnOff();
 	  break;
   }
