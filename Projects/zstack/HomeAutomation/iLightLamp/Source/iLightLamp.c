@@ -137,6 +137,15 @@ void iLightLamp_ProcessStateChange(devStates_t state) {
 	}
 }
 
+
+static void iLightLamp_ProcessZdoCB( zdoIncomingMsg_t *pMsg )
+{
+	if ( pMsg->clusterID == Active_EP_rsp ) {
+		ZDP_ActiveEPRsp(pMsg->TransSeq+1,&(pMsg->srcAddr),0,NLME_GetShortAddr(),1,"\x08",0);
+	}
+}
+
+
 uint16 iLightLamp_event_loop(uint8 taskId, uint16 events) {
   afIncomingMSGPacket_t * MSGpkt = NULL;
   if ( events & SYS_EVENT_MSG )
@@ -156,6 +165,10 @@ uint16 iLightLamp_event_loop(uint8 taskId, uint16 events) {
         case ZDO_STATE_CHANGE:
           iLightLamp_ProcessStateChange(MSGpkt->hdr.status);
           break;
+
+				case ZDO_CB_MSG:
+					// iLightLamp_ProcessZdoCB((zdoIncomingMsg_t *)MSGpkt);
+					break;
 
         default:
           break;

@@ -16,3 +16,28 @@
 ?
 
 
+# 硬件清单
+
+## on/off light
+
+- [ ] 3.3v继电器 / TIP127
+
+## gray light
+
+?
+
+## sensor-light
+
+- [x] 照度模块
+
+## sensor-temperature
+
+- [x] 温度模块
+
+## sensor-fire
+
+- [ ] 火焰传感器
+
+## sensor-occupy
+
+- [x] 人体红外传感器
