@@ -95,19 +95,19 @@ static void iLightBridge_ProcessAppMsg(mtSysAppMsg_t *pMsg) {
   uint16 destNwk;
   uint8 destEp;
   uint16 clusterId;
+	uint8 len;
   uint8 * pAppPayload = NULL;
   afAddrType_t destAddr;
   afStatus_t sendResult;
   
   // parse
   // ---------------------
-  selfEp = *pData++;
-  destNwk = BUILD_UINT16(pData[0], pData[1]);
-  pData += 2;
-  destEp = *pData++;
-  clusterId = BUILD_UINT16(pData[0], pData[1]);
-  pData += 2;
-  pAppPayload = pData;
+	selfEp = pMsg->endpoint;
+	destNwk = BUILD_UINT16(pData[0], pData[1]);
+	destEp = pData[2];
+	clusterId = BUILD_UINT16(pData[3], pData[4]);
+	len = pData[5];
+	pAppPayload = &pData[6];
 
   // send
   // ---------------------
@@ -119,7 +119,7 @@ static void iLightBridge_ProcessAppMsg(mtSysAppMsg_t *pMsg) {
     (afAddrType_t * )&destAddr,
     (endPointDesc_t *)&iLightBridge_EpDesc,
     clusterId,
-    appDataLen - 6,
+    len,
     (uint8 *)pAppPayload,
     (uint8 *)&iLightBridge_transId,
     AF_ACK_REQUEST | AF_SUPRESS_ROUTE_DISC_NETWORK,

@@ -87,12 +87,14 @@ void iLightLamp_init(uint8 taskId) {
 void iLightLamp_ProcessAirMsg(afIncomingMSGPacket_t * MSGpkt) {
   uint16 cluster = MSGpkt->clusterId;
   uint8 cmdId = 0;
+  uint8 * pData = NULL;
   if (cluster != ILIGHT_APPMSG_CLUSTER) return;
-  cmdId = appMsg_getCmdId(MSGpkt->cmd.Data);
+  pData = MSGpkt->cmd.Data;
+  cmdId = appMsg_getCmdId(pData);
   switch(cmdId) {
   	case ILIGHT_APPMSG_LAMP_ONOFF:
-		iLightLamp_currentOnOff = ((iLight_appMsg_lamp_onOff_t *) MSGpkt)->onOff;
-	  iLightLamp_updateOnOff();
+			iLightLamp_currentOnOff = ((iLight_appMsg_lamp_onOff_t *)pData)->onOff;
+		  iLightLamp_updateOnOff();
 	  break;
   }
 }
@@ -106,33 +108,23 @@ void iLightLamp_ProcessKeys(uint8 shift, uint8 keys) {
   }
 }
 
-void iLightLamp_annce(void) {
-	uint16 nwk = NLME_GetShortAddr();
-	byte *ieeep = NLME_GetExtAddr();
-	// router
-	uint8 ca = (0x01<<1);
-	ZDP_DeviceAnnce(nwk, ieeep, ca, 0);
-}
-
 void iLightLamp_ProcessStateChange(devStates_t state) {
 	iLightLamp_nwkState = state;
 	switch (state) {
 		case DEV_INIT:
 			// flash slowly
-			HalLedBlink(HAL_LED_1, 0, 30, 1000);
+			HalLedBlink(HAL_LED_2, 0, 30, 1000);
 			break;
 		case DEV_NWK_DISC:
 		case DEV_NWK_JOINING:
 		case DEV_END_DEVICE_UNAUTH:
 			// flash quickly
-			HalLedBlink(HAL_LED_1, 0, 30, 500);
+			HalLedBlink(HAL_LED_2, 0, 30, 500);
 			break;
 		case DEV_END_DEVICE:
 		case DEV_ROUTER:
 			// turn on
-			HalLedSet(HAL_LED_1, HAL_LED_MODE_ON);
-			// annce
-			iLightLamp_annce();
+			HalLedSet(HAL_LED_2, HAL_LED_MODE_ON);
 			break;
 	}
 }

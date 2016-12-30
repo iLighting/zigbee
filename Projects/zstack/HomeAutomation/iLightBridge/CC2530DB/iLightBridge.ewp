@@ -309,10 +309,14 @@
           <state>xHOLD_AUTO_START</state>
           <state>ZTOOL_P1</state>
           <state>MT_TASK</state>
+          <state>MT_AF_FUNC</state>
+          <state>MT_AF_CB_FUNC</state>
+          <state>AF_DEBUG_FUNC</state>
           <state>MT_APP_FUNC</state>
           <state>MT_SYS_FUNC</state>
           <state>MT_ZDO_FUNC</state>
           <state>MT_ZDO_CB_FUNC</state>
+          <state>MT_UTIL_FUNC</state>
           <state>LCD_SUPPORTED=DEBUG</state>
           <state>MULTICAST_ENABLED=FALSE</state>
           <state>ZCL_READ</state>
