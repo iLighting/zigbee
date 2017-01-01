@@ -14,8 +14,8 @@
 
 ## gray light (router)
 
-?
-
+- output: P1_0 (`ACTIVE_LOW`)
+- online flag: P1_1 (`ACTIVE_LOW`)
 
 # 硬件清单
 
