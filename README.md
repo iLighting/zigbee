@@ -1,3 +1,7 @@
+# 工程复制
+
+只需保留 `.ewd`, `.ewp`, `.eww`
+
 # 串口配置
 
 注意：
@@ -15,6 +19,11 @@
 ## gray light (router)
 
 - output: P1_0 (`ACTIVE_LOW`)
+- online flag: P1_1 (`ACTIVE_LOW`)
+
+## sensor temperature
+
+- IO: P0_7
 - online flag: P1_1 (`ACTIVE_LOW`)
 
 # 硬件清单

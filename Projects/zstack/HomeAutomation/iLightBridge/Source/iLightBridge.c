@@ -73,18 +73,36 @@ void iLightBridge_init(byte taskId) {
 
 // inject参数，上传至local server(AppMsgFeedback)
 static void iLightBridge_ProcessAirMsg(afIncomingMSGPacket_t * pMsg) {
-  iLightBridge_feedback_t feedback;
+	uint8 feedbackSize = 2+1+2+2+pMsg->cmd.DataLength;
+  // This is a bug?
+	// uint8 * pFeedback = osal_mem_alloc(feedbackSize);
+  
+  uint8 pFeedback[6+20] = {0};
+
+	if (pFeedback != NULL) {
+		// remoteNwk
+		pFeedback[0] = LO_UINT16(pMsg->srcAddr.addr.shortAddr);
+		pFeedback[1] = HI_UINT16(pMsg->srcAddr.addr.shortAddr);
+		// remoteEp
+		pFeedback[2] = pMsg->endPoint;
+		// clusterId
+		pFeedback[3] = LO_UINT16(pMsg->clusterId);
+		pFeedback[4] = HI_UINT16(pMsg->clusterId);
+		// msgLen
+		pFeedback[5] = LO_UINT16(pMsg->cmd.DataLength);
+		pFeedback[6] = HI_UINT16(pMsg->cmd.DataLength);
+		// pData
+		osal_memcpy(pFeedback+7, pMsg->cmd.Data, pMsg->cmd.DataLength);
+		
+	  MT_BuildAndSendZToolResponse(
+			0x49, 0,
+			feedbackSize,
+			pFeedback);
+		// osal_mem_free(pFeedback);
+	}else {
+		;
+	}
 	
-	feedback.remoteNwk = pMsg->srcAddr.addr.shortAddr;
-	feedback.remoteEp = pMsg->endPoint;
-	feedback.clusterId = pMsg->clusterId;
-	feedback.msgLen = pMsg->cmd.DataLength;
-	feedback.pData = pMsg->cmd.Data;
-	
-  MT_BuildAndSendZToolResponse(
-		0x49, 0,
-		feedback.msgLen,
-		feedback.pData);
 }
 
 

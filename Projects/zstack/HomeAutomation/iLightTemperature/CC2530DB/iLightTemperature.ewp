@@ -309,29 +309,23 @@
           <state>xHOLD_AUTO_START</state>
           <state>ZTOOL_P1</state>
           <state>MT_TASK</state>
-          <state>MT_AF_FUNC</state>
-          <state>MT_AF_CB_FUNC</state>
-          <state>AF_DEBUG_FUNC</state>
           <state>MT_APP_FUNC</state>
           <state>MT_SYS_FUNC</state>
           <state>MT_ZDO_FUNC</state>
-          <state>MT_ZDO_CB_FUNC</state>
-          <state>MT_UTIL_FUNC</state>
-          <state>xLCD_SUPPORTED=DEBUG</state>
+          <state>LCD_SUPPORTED=DEBUG</state>
           <state>MULTICAST_ENABLED=FALSE</state>
-          <state>xZCL_READ</state>
-          <state>xZCL_WRITE</state>
-          <state>xZCL_REPORT</state>
-          <state>xZCL_EZMODE</state>
-          <state>xZCL_BASIC</state>
-          <state>xZCL_IDENTIFY</state>
-          <state>xZCL_ON_OFF</state>
-          <state>xZCL_SCENES</state>
-          <state>xZCL_GROUPS</state>
+          <state>ZCL_READ</state>
+          <state>ZCL_WRITE</state>
+          <state>ZCL_REPORT</state>
+          <state>ZCL_EZMODE</state>
+          <state>ZCL_BASIC</state>
+          <state>ZCL_IDENTIFY</state>
+          <state>ZCL_ON_OFF</state>
+          <state>ZCL_SCENES</state>
+          <state>ZCL_GROUPS</state>
           <state>xZCL_LEVEL_CTRL</state>
-          <state>xZCL_DIAGNOSTIC</state>
+          <state>ZCL_DIAGNOSTIC</state>
           <state>FEATURE_SYSTEM_STATS</state>
-          <state>MT_UART_DEFAULT_OVERFLOW=FALSE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -399,7 +393,7 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCMultibyteSupport</name>
@@ -792,7 +786,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>iLightBridge.d51</state>
+          <state>iLightTemperature.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -990,7 +984,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>iLightBridge.sim</state>
+          <state>SampleLight.sim</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
@@ -1467,12 +1461,13 @@
           <state>TC_LINKKEY_JOIN</state>
           <state>NV_INIT</state>
           <state>xNV_RESTORE</state>
-          <state>HOLD_AUTO_START</state>
+          <state>xHOLD_AUTO_START</state>
           <state>ZTOOL_P1</state>
           <state>MT_TASK</state>
           <state>MT_APP_FUNC</state>
           <state>MT_SYS_FUNC</state>
           <state>MT_ZDO_FUNC</state>
+          <state>MT_ZDO_CB_FUNC</state>
           <state>LCD_SUPPORTED=DEBUG</state>
           <state>MULTICAST_ENABLED=FALSE</state>
           <state>ZCL_READ</state>
@@ -1554,7 +1549,7 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCMultibyteSupport</name>
@@ -1947,7 +1942,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>SampleLight.d51</state>
+          <state>iLightTemperature.d51</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -2145,7 +2140,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>SampleLight.sim</state>
+          <state>iLightTemperature.sim</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
@@ -4640,13 +4635,13 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\Source\iLightBridge.c</name>
+      <name>$PROJ_DIR$\..\source\iLightTemperature.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\iLightBridge.h</name>
+      <name>$PROJ_DIR$\..\source\iLightTemperature_measure.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\OSAL_iLightBridge.c</name>
+      <name>$PROJ_DIR$\..\source\OSAL_iLightTemperature.c</name>
     </file>
   </group>
   <group>
