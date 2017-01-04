@@ -12,6 +12,9 @@
 #define ILIGHT_APPMSG_SENSOR_TEMPERATURE_FETCH 			0
 #define ILIGHT_APPMSG_SENSOR_TEMPERATURE_FEEDBACK 	1
 
+#define ILIGHT_APPMSG_SENSOR_ILLUMINANCE_FETCH 			0
+#define ILIGHT_APPMSG_SENSOR_ILLUMINANCE_FEEDBACK 	1
+
 // lamp
 // ====================
 typedef struct {
@@ -46,6 +49,17 @@ typedef struct {
 	uint8 cmdId;
 	int16 temperature;
 } iLight_appMsg_sensor_temperature_feedback_t;
+
+// sensor illuminance
+// ====================
+typedef struct {
+	uint8 cmdId;
+} iLight_appMsg_sensor_illuminance_fetch_t;
+
+typedef struct {
+	uint8 cmdId;
+	int16 temperature;
+} iLight_appMsg_sensor_illuminance_feedback_t;
 
 extern uint8 appMsg_getCmdId(uint8 * pData);
 
