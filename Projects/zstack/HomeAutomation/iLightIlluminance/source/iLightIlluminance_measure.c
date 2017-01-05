@@ -71,7 +71,7 @@ static void bh1750_continuously_h_mode_read(void) {
 	iic_op_read(&low_byte);
 	iic_op_mnack();
 	iic_op_sp();
-	iLightIlluminance_measure_value = (high_byte << 8) | low_byte;
+	iLightIlluminance_measure_value = ((high_byte << 8) | low_byte) / 1.2;
 }
 
 void iLightIlluminance_measure_init(byte task_id)
