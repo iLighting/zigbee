@@ -20,7 +20,7 @@
 #define MAJOR_PWM_CH HAL_T1_CH2 // -> P1_0
 #define MINOR_PWM_CH HAL_T1_CH1 // -> P1_1
 
-#define MONOR_PWM_K 0.5
+#define MINOR_PWM_K 0.5
 
 static uint8 iLightGrayLamp_taskId = 0;
 static uint8 iLightGrayLamp_nwkState = 0;
@@ -51,7 +51,7 @@ static endPointDesc_t iLightGrayLamp_epDesc = {
 
 static void iLightGrayLamp_launchMinorPwm(void)
 {
-  halTimer1SetChannelDuty(MINOR_PWM_CH, 1000 * MONOR_PWM_K);
+  halTimer1SetChannelDuty(MINOR_PWM_CH, 1000 * MINOR_PWM_K);
 }
 
 void iLightGrayLamp_updateLevel()
