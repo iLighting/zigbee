@@ -18,7 +18,8 @@
 
 ## gray light (router)
 
-- output: P1_0 (`ACTIVE_LOW`)
+- output: P1_0 (`ACTIVE_HIGH`)
+- output(minor): P1_1 (`ACTIVE_HIGH`)
 - online flag: P1_1 (`ACTIVE_LOW`)
 
 ## sensor temperature
