@@ -264,18 +264,19 @@ void HalTimer1Init(halTimerCBack_t cBack)
   halTimer1Channel[0].TxCCH = TCHN_T1CCH;
 
   halTimerRecord[HW_TIMER_1].configured = TRUE;
-  halTimerRecord[HW_TIMER_1].opMode = HAL_TIMER1_OPMODE_UPDOWN;
+  halTimerRecord[HW_TIMER_1].opMode = HAL_TIMER1_OPMODE_MODULO;
   halTimerRecord[HW_TIMER_1].channel = 0;
   halTimerRecord[HW_TIMER_1].channelMode = 0;
   halTimerRecord[HW_TIMER_1].intEnable = FALSE;
   halTimerRecord[HW_TIMER_1].callBackFunc = cBack;
-  Timer1MaxCount = halTimer1SetPeriod(4292); // 233Hz
+  // Timer1MaxCount = halTimer1SetPeriod(4292); // 233Hz
+  Timer1MaxCount = halTimer1SetPeriod(42); // ~ 20khz
 
   halTimerSetPrescale(HW_TIMER_1, halTimerRecord[HW_TIMER_1].prescale);
   halTimerSetChannelMode(HW_TIMER_1, halTimerRecord[HW_TIMER_1].channelMode);
   halTimer1SetChannelCCTL(HAL_T1_CH0, 0, 1, HAL_TIMER1_CH0_CMP_MODE_SET_ON_COMP, 1, HAL_TIMER1_CH_CAP_MODE_NO);
   halTimer1SetChannelCCTL(HAL_T1_CH1, 0, 1, HAL_TIMER1_CHn_CMP_MODE_CLR_ON_COMP_SET_ON_0, 1, HAL_TIMER1_CH_CAP_MODE_NO);
-  halTimer1SetChannelCCTL(HAL_T1_CH2, 0, 1, HAL_TIMER1_CHn_CMP_MODE_CLR_ON_COMP_SET_ON_0, 1, HAL_TIMER1_CH_CAP_MODE_NO);
+  halTimer1SetChannelCCTL(HAL_T1_CH2, 0, 1, HAL_TIMER1_CHn_CMP_MODE_SET_ON_COMP_CLR_ON_0, 1, HAL_TIMER1_CH_CAP_MODE_NO);
   halTimer1SetChannelCCTL(HAL_T1_CH3, 0, 1, HAL_TIMER1_CHn_CMP_MODE_CLR_ON_COMP_SET_ON_0, 1, HAL_TIMER1_CH_CAP_MODE_NO);
   halTimer1SetChannelCCTL(HAL_T1_CH4, 0, 1, HAL_TIMER1_CHn_CMP_MODE_CLR_ON_COMP_SET_ON_0, 1, HAL_TIMER1_CH_CAP_MODE_NO);
 
@@ -286,7 +287,7 @@ void HalTimer1Init(halTimerCBack_t cBack)
 
   /* set timer 1 operating mode */
   T1CTL &= ~(HAL_TIMER1_OPMODE_BITS);
-  T1CTL |= HAL_TIMER1_OPMODE_UPDOWN;
+  T1CTL |= HAL_TIMER1_OPMODE_MODULO;
 }
 
 /***************************************************************************************************

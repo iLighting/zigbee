@@ -22,6 +22,8 @@
 
 #define MINOR_PWM_K 0.5
 
+#define LED_LEVEL_PROMILL_MAX (80 * 10)
+
 static uint8 iLightGrayLamp_taskId = 0;
 static uint8 iLightGrayLamp_nwkState = 0;
 static uint8 iLightGrayLamp_currentLevel = 0;
@@ -56,8 +58,10 @@ static void iLightGrayLamp_launchMinorPwm(void)
 
 void iLightGrayLamp_updateLevel()
 {
-  uint8 level = iLightGrayLamp_currentLevel;
-  halTimer1SetChannelDuty(MAJOR_PWM_CH, level * 10);
+  uint16 promill = iLightGrayLamp_currentLevel * 10;
+  promill = promill * (LED_LEVEL_PROMILL_MAX / 1000.0);
+  promill = 1000 - promill;
+  halTimer1SetChannelDuty(MAJOR_PWM_CH, promill);
 }
 
 void iLightGrayLamp_init(uint8 taskId)
