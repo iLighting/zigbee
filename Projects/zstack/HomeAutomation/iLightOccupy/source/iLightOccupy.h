@@ -3,7 +3,7 @@
 
 #include "ZComDef.h"
 
-#define ILIGHT_OCCUPY_CHEAK_INTERVAL 500 // 0.5s
+#define ILIGHT_OCCUPY_CHEAK_INTERVAL 200 // 0.2s
 
 // event id
 #define ILIGHT_OCCUPY_CHEAK (1 << 0)
