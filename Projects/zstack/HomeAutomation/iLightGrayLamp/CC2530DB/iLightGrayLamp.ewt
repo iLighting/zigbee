@@ -4856,6 +4856,9 @@
       </file>
     </group>
     <file>
+      <name>$PROJ_DIR$\..\Source\hal_timer.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\Source\iLightGrayLamp.c</name>
     </file>
     <file>

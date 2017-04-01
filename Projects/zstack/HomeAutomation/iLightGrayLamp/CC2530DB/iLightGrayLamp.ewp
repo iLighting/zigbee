@@ -5797,6 +5797,9 @@
       </file>
     </group>
     <file>
+      <name>$PROJ_DIR$\..\Source\hal_timer.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\Source\iLightGrayLamp.c</name>
       <excluded>
         <configuration>PwmTest</configuration>
@@ -5975,6 +5978,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$\..\..\..\..\..\Components\hal\target\CC2530PMP4712\hal_timer.c</name>
+            <excluded>
+              <configuration>RouterZLight</configuration>
+            </excluded>
           </file>
           <file>
             <name>$PROJ_DIR$\..\..\..\..\..\Components\hal\target\CC2530PMP4712\hal_uart.c</name>

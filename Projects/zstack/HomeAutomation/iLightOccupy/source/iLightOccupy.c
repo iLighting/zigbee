@@ -157,6 +157,7 @@ uint16 iLightOccupy_event_loop(uint8 taskId, uint16 events)
     uint8 current = iLightOccupy_measure_read_occupy();
     if (current != iLightOccupy_lastOccupy)
     {
+      HalLedSet(HAL_LED_1, current == 0 ? HAL_LED_MODE_OFF : HAL_LED_MODE_ON);
       iLightOccupy_lastOccupy = current;
       iLightOccupy_feedbackOccupy();
     }

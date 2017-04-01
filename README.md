@@ -22,33 +22,14 @@
 - output(minor): P1_1 (`ACTIVE_HIGH`)
 - online flag: P1_1 (`ACTIVE_LOW`)
 
-## sensor temperature
+## 温度传感器
 
 - IO: P0_7
 - online flag: P1_1 (`ACTIVE_LOW`)
 
-# 硬件清单
+## 照度传感器
 
-## on/off light
-
-- [ ] 3.3v继电器 / TIP127
-
-## gray light
-
-?
-
-## sensor-light
-
-- [x] 照度模块
-
-## sensor-temperature
-
-- [x] 温度模块
-
-## sensor-fire
-
-- [ ] 火焰传感器
-
-## sensor-occupy
-
-- [x] 人体红外传感器
+- SDA: P1_2
+- SCL: P1_3
+- ADD: LOW
+- online flag: P1_1 (`ACTIVE_LOW`)
