@@ -11,6 +11,7 @@
 #include "OnBoard.h"
 
 #include "iLightIlluminance_measure.h"
+#include "stdio.h"
 
 static int16 iLightIlluminance_measure_value = 0;
 static uint8 iLightIlluminance_measure_task_id = 0;
@@ -22,7 +23,7 @@ void iic_hd_init(void)
   P1DIR |= 1 << 2;		   // sda output
   P1DIR |= 1 << 3;		   // scl output
   P1_2 = 1;
-  P2_3 = 1;
+  P1_3 = 1;
 }
 
 void iic_hd_sda_mode_read(void)
@@ -55,6 +56,15 @@ void iic_hd_scl_write(uint8 x)
 static void bh1750_init(void)
 {
   iic_op_init();
+}
+
+static void bh1750_soft_reset(void) {
+  iic_op_st();
+  iic_op_write((BH1750_ADDR << 1) | 0x00);
+  iic_op_sxack(NULL);
+  iic_op_write(0x07);
+  iic_op_sxack(NULL);
+  iic_op_sp();
 }
 
 static void bh1750_continuously_h_mode_start(void)
@@ -100,14 +110,15 @@ uint16 iLightIlluminance_measure_event_loop(uint8 task_id, uint16 events)
   {
     bh1750_continuously_h_mode_start();
     osal_start_timerEx(
-	iLightIlluminance_measure_task_id,
-	ILIGHT_ILLUMINANCE_MEASURE_START_DONE,
-	180);
+      iLightIlluminance_measure_task_id,
+      ILIGHT_ILLUMINANCE_MEASURE_START_DONE,
+      200);
     return events ^ ILIGHT_ILLUMINANCE_MEASURE_START;
   }
   if (events & ILIGHT_ILLUMINANCE_MEASURE_START_DONE)
   {
     bh1750_continuously_h_mode_read();
+    // printf("s %d\n", (int)(iLightIlluminance_measure_value));
     // set LED1 (for debuging)
     HalLedSet(HAL_LED_1, iLightIlluminance_measure_value < 100 ? HAL_LED_MODE_OFF : HAL_LED_MODE_ON);
     // debuging end

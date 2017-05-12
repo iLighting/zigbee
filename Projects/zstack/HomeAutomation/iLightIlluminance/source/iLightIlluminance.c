@@ -14,6 +14,8 @@
 #include "iLightIlluminance.h"
 #include "iLightIlluminance_measure.h"
 
+#include "stdio.h"
+
 static uint8 iLightIlluminance_taskId = 0;
 static uint8 iLightIlluminance_nwkState = 0;
 static int16 iLightIlluminance_lastValue = 0;
@@ -57,6 +59,7 @@ void iLightIlluminance_feedback(void)
 
   pFeedback->cmdId = ILIGHT_APPMSG_SENSOR_ILLUMINANCE_FEEDBACK;
   pFeedback->temperature = iLightIlluminance_measure_read();
+  // printf("f %d\n", (int)(pFeedback->temperature));
 
   sendResult = AF_DataRequest(
       &destAddr,
@@ -162,7 +165,6 @@ uint16 iLightIlluminance_event_loop(uint8 taskId, uint16 events)
       iLightIlluminance_lastValue = current;
       iLightIlluminance_feedback();
     }
-
     osal_start_timerEx(iLightIlluminance_taskId, ILIGHT_ILLUMINANCE_CHEAK, ILIGHT_ILLUMINANCE_CHEAK_INTERVAL);
     return events ^ ILIGHT_ILLUMINANCE_CHEAK;
   }

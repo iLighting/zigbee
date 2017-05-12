@@ -1482,6 +1482,7 @@
           <state>xZCL_LEVEL_CTRL</state>
           <state>ZCL_DIAGNOSTIC</state>
           <state>FEATURE_SYSTEM_STATS</state>
+          <state>xASR_DEBUG</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
